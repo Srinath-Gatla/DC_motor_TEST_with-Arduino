@@ -1,2 +1,38 @@
-# DC_motor_TEST_with-Arduino
-This project demonstrates how to control the direction of a DC motor using an Arduino Uno and the L293D motor driver IC. The motor's rotation is controlled via two push buttons—one for forward rotation and one for reverse. The setup is ideal for basic robotics, motor control systems, or learning how to interface actuators with micro controllers.
+// Motor control pins
+const int IN1 = 2;
+const int IN2 = 3;
+
+// Button pins
+const int buttonForward = 4;
+const int buttonBackward = 5;
+
+void setup() {
+  // Set motor pins as output
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+
+  // Set button pins as input
+  pinMode(buttonForward, INPUT);
+  pinMode(buttonBackward, INPUT);
+}
+
+void loop() {
+  bool forward = digitalRead(buttonForward);
+  bool backward = digitalRead(buttonBackward);
+
+  if (forward && !backward) {
+    // Rotate motor forward
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, LOW);
+  } 
+  else if (!forward && backward) {
+    // Rotate motor backward
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, HIGH);
+  } 
+  else {
+    // Stop motor
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, LOW);
+  }
+}
